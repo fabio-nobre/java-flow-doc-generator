@@ -13,7 +13,7 @@ public class StatementMapper {
 
     node.setId(java.util.UUID.randomUUID().toString());
 
-    node.setLabel(statement.toString());
+    node.setLabel(resolveLabel(statement));
 
     node.setType(resolveType(statement));
 
@@ -45,6 +45,19 @@ public class StatementMapper {
         return FlowNodeType.ACTION;
 
     }
+
+  }
+
+  private String resolveLabel(Statement statement) {
+
+    String text = statement.toString();
+
+    text = text.replace("\r", "")
+        .replace("\n", " ");
+
+    return text.length() > 80
+        ? text.substring(0, 80) + "..."
+        : text;
 
   }
 
