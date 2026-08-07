@@ -2,11 +2,10 @@ package br.com.fabionobre.flowdoc.application;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
-import br.com.fabionobre.flowdoc.analysis.JavaProjectAnalyzer;
-import br.com.fabionobre.flowdoc.analysis.ProjectAnalyzer;
-import br.com.fabionobre.flowdoc.domain.model.ClassModel;
-import br.com.fabionobre.flowdoc.presentation.ConsolePrinter;
+import br.com.fabionobre.flowdoc.analysis.scanner.ProjectScanner;
+import br.com.fabionobre.flowdoc.presentation.ProjectPrinter;
 
 public class FlowDocApplication {
 
@@ -16,19 +15,15 @@ public class FlowDocApplication {
         System.out.println(" Java Flow Doc Generator");
         System.out.println("======================================");
 
-        ProjectAnalyzer analyzer = new JavaProjectAnalyzer();
+        Path projectDirectory = Paths.get("samples");
 
-        Path source = Paths.get("samples", "Pessoa.java");
+        ProjectScanner scanner = new ProjectScanner();
 
-        System.out.println("Diretório atual : " + Paths.get("").toAbsolutePath());
-        System.out.println("Arquivo.........: " + source.toAbsolutePath());
-        System.out.println(Paths.get("").toAbsolutePath());
+        List<Path> files = scanner.scan(projectDirectory);
 
-        ClassModel model = analyzer.analyze(source);
+        ProjectPrinter printer = new ProjectPrinter();
 
-        ConsolePrinter printer = new ConsolePrinter();
-
-        printer.print(model);
+        printer.print(files);
 
     }
 
