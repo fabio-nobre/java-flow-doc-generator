@@ -4,8 +4,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import br.com.fabionobre.flowdoc.analysis.JavaProjectAnalyzer;
 import br.com.fabionobre.flowdoc.analysis.scanner.ProjectScanner;
-import br.com.fabionobre.flowdoc.presentation.ProjectPrinter;
+import br.com.fabionobre.flowdoc.domain.model.ClassModel;
+import br.com.fabionobre.flowdoc.presentation.ConsolePrinter;
 
 public class FlowDocApplication {
 
@@ -21,9 +23,16 @@ public class FlowDocApplication {
 
         List<Path> files = scanner.scan(projectDirectory);
 
-        ProjectPrinter printer = new ProjectPrinter();
+        JavaProjectAnalyzer analyzer = new JavaProjectAnalyzer();
 
-        printer.print(files);
+        ConsolePrinter printer = new ConsolePrinter();
+
+        for (Path file : files) {
+
+            ClassModel clazz = analyzer.analyze(file);
+
+            printer.print(clazz);
+        }
 
     }
 

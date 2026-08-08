@@ -5,29 +5,23 @@ import java.nio.file.Path;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
 import br.com.fabionobre.flowdoc.analysis.mapper.CompilationUnitMapper;
-import br.com.fabionobre.flowdoc.analysis.mapper.StatementMapper;
 import br.com.fabionobre.flowdoc.domain.model.ClassModel;
-import br.com.fabionobre.flowdoc.domain.model.MethodModel;
-import br.com.fabionobre.flowdoc.domain.model.ParameterModel;
-import br.com.fabionobre.flowdoc.domain.model.FlowNode;
 
 public class JavaProjectAnalyzer implements ProjectAnalyzer {
 
   private final CompilationUnitMapper mapper = new CompilationUnitMapper();
 
   @Override
-  public ClassModel analyze(Path sourceFile)
-      throws Exception {
+  public ClassModel analyze(Path sourceFile) throws Exception {
 
-    validarArquivo(sourceFile);
+    System.out.println();
+    System.out.println("Analisando: " + sourceFile);
 
     CompilationUnit unit = StaticJavaParser.parse(sourceFile);
 
     return mapper.map(unit);
-
   }
 
   private void validarArquivo(Path sourceFile) {

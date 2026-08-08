@@ -38,7 +38,7 @@
                 <version>3.6.3</version>
                 <configuration>
                     <mainClass>
-                        br.com.fabionobre.flowdoc.FlowDocApplication
+                        br.com.fabionobre.flowdoc.application.FlowDocApplication
                     </mainClass>
                 </configuration>
             </plugin>
