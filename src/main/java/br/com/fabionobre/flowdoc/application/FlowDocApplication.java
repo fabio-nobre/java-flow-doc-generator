@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.fabionobre.flowdoc.analysis.JavaProjectAnalyzer;
 import br.com.fabionobre.flowdoc.analysis.scanner.ProjectScanner;
+import br.com.fabionobre.flowdoc.analysis.service.ProjectAnalysisService;
 import br.com.fabionobre.flowdoc.domain.model.ClassModel;
 import br.com.fabionobre.flowdoc.presentation.ConsolePrinter;
 
@@ -25,11 +26,13 @@ public class FlowDocApplication {
 
         JavaProjectAnalyzer analyzer = new JavaProjectAnalyzer();
 
+        ProjectAnalysisService analysisService = new ProjectAnalysisService(analyzer);
+
+        List<ClassModel> classes = analysisService.analyze(files);
+
         ConsolePrinter printer = new ConsolePrinter();
 
-        for (Path file : files) {
-
-            ClassModel clazz = analyzer.analyze(file);
+        for (ClassModel clazz : classes) {
 
             printer.print(clazz);
         }
