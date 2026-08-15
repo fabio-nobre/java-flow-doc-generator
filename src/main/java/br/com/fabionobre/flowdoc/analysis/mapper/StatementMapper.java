@@ -30,20 +30,19 @@ public class StatementMapper {
         return FlowNodeType.DECISION;
 
       case "ForStmt":
-
       case "ForEachStmt":
-
       case "WhileStmt":
-
       case "DoStmt":
         return FlowNodeType.LOOP;
 
       case "ReturnStmt":
         return FlowNodeType.RETURN;
 
+      case "TryStmt":
+        return FlowNodeType.TRY;
+
       default:
         return FlowNodeType.ACTION;
-
     }
 
   }
