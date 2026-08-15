@@ -11,48 +11,75 @@ public class ConsolePrinter {
 
     System.out.println();
     System.out.println("Classe : " + model.getClassName());
-
     System.out.println("Pacote : " + model.getPackageName());
 
     System.out.println();
     System.out.println("Métodos:");
 
+    if (model.getMethods().isEmpty()) {
+
+      System.out.println(" - (nenhum método declarado)");
+
+      return;
+    }
+
     for (MethodModel method : model.getMethods()) {
 
-      StringBuilder assinatura = new StringBuilder();
-      assinatura.append(" - ")
-          .append(method.getReturnType())
+      printMethod(method);
+    }
+  }
+
+  private void printMethod(MethodModel method) {
+
+    printFlow(method);
+    printSignature(method);
+  }
+
+  private void printSignature(MethodModel method) {
+
+    StringBuilder assinatura = new StringBuilder();
+
+    assinatura.append(" - ")
+        .append(method.getReturnType())
+        .append(" ")
+        .append(method.getName())
+        .append("(");
+
+    for (int i = 0; i < method.getParameters().size(); i++) {
+
+      ParameterModel parameter = method.getParameters().get(i);
+
+      assinatura.append(parameter.getType())
           .append(" ")
-          .append(method.getName())
-          .append("(");
+          .append(parameter.getName());
 
-      for (int i = 0; i < method.getParameters().size(); i++) {
+      if (i < method.getParameters().size() - 1) {
 
-        ParameterModel p = method.getParameters().get(i);
+        assinatura.append(", ");
+      }
+    }
 
-        assinatura.append(p.getType())
-            .append(" ")
-            .append(p.getName());
+    assinatura.append(")");
 
-        if (i < method.getParameters().size() - 1) {
-          assinatura.append(", ");
-        }
+    System.out.println(assinatura);
+  }
 
-        System.out.println("Fluxo:");
+  private void printFlow(MethodModel method) {
 
-        for (FlowNode node : method.getFlowNodes()) {
+    if (method.getFlowNodes().isEmpty()) {
 
-          System.out.println("   "
+      return;
+    }
+
+    System.out.println("Fluxo:");
+
+    for (FlowNode node : method.getFlowNodes()) {
+
+      System.out.println(
+          "   "
               + node.getType()
               + " -> "
               + node.getLabel());
-
-        }
-      }
-
-      assinatura.append(")");
-
-      System.out.println(assinatura);
     }
   }
 }
